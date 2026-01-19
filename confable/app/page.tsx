@@ -17,7 +17,7 @@ export default function Home() {
 
       <div className="flex flex-col justify-center items-center gap-5 mt-10">
         <Button variant={"ghost"} className="text-white font-bold border border-white p-6">
-          <Link href={"https://youtube.com"}>Play Wordle</Link>
+          <Link href={"/wordle"}>Play Wordle</Link>
         </Button>
         
 
