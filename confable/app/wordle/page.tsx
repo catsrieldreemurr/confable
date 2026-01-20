@@ -1,9 +1,10 @@
 "use client"
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Navbar from "@/components/ui/navbar";
 import WordBox from "@/components/ui/wordBox";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 
 async function Word(){
     const res = await fetch("/api/getWord");
@@ -18,7 +19,8 @@ export default function Page(){
     const [word, setWord] = useState(""); // The Current Correct Word 
     const [currentGuess, setCurrentGuess] = useState(0) // Keep track of which round the player is on 
     const maxLength = 5;
-
+    const [hasWon, setHasWon] = useState(false);
+    const [winningAtt, setWinningAtt] = useState(0);
     useEffect(() => {
         async function word(){
             const w = await Word();
@@ -32,25 +34,33 @@ export default function Page(){
     return(
         <div className="bg-gray-600 h-screen">
             <Navbar></Navbar>
-            {currentGuess <= 5 && <div className="flex flex-col justify-center items-center mt-10 gap-2"> {/* GameBox */}
+                {currentGuess <= 5 && <div className="flex flex-col justify-center items-center mt-10 gap-2"> {/* GameBox */}
                 <h1 className="text-white text-2xl font-bold mb-5">Wordle</h1>
 
                 
                 <form className="flex flex-col justify-center items-center mb-5" autoComplete="off" onSubmit={(e) => {
                     e.preventDefault()
                     if(guess[currentGuess].length == 5){
-                        setCurrentGuess(currentGuess + 1)
+                        if(tempGuess === word){
+                            setHasWon(true);
+                            setWinningAtt(currentGuess)
 
-                        const copy = guess.slice();
-                        copy[currentGuess] = tempGuess;
+                            setCurrentGuess(1000);
+                        }
+                        else{
+                            setCurrentGuess(currentGuess + 1)
 
-                        const copy2 = isSubmitted.slice();
-                        copy2[currentGuess] = true;
+                            const copy = guess.slice();
+                            copy[currentGuess] = tempGuess;
 
-                        setGuess(copy);
-                        setIsSubmitted(copy2);
+                            const copy2 = isSubmitted.slice();
+                            copy2[currentGuess] = true;
 
-                        setTemp("");
+                            setGuess(copy);
+                            setIsSubmitted(copy2);
+
+                            setTemp("");
+                        }
                     }
                 }}>
                     <Label htmlFor="guess" className="p-3 text-white text-lg">Guess</Label>
@@ -71,9 +81,15 @@ export default function Page(){
             </div>}
 
             {
-                currentGuess > 5 && <div>
+                (currentGuess > 5 && hasWon === false) && <div>
                     <h1 className="text-2xl text-white font-bold text-center">You Lost.</h1>
                     <h2 className="text-xl text-white text-center">The word was {word}</h2>
+                </div>
+            }{
+                (currentGuess > 5 && hasWon) && <div>
+                    <h1 className="text-2xl text-white font-bold text-center">You Won!</h1>
+                    <h2 className="text-xl text-white text-center">The word was {word}.</h2>
+                    <p className="text-white text-center">It took you {winningAtt + 1} attempts.</p>
                 </div>
             }
         </div>

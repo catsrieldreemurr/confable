@@ -21,7 +21,7 @@ export default function Home() {
         </Button>
         
 
-        <Button variant={"ghost"} className="text-white font-bold border border-white p-6"> 
+        <Button disabled variant={"ghost"} className="text-white font-bold border border-white p-6"> 
           <Link href={"https://youtube.com"}>Play Confable</Link>
         </Button>
       </div>

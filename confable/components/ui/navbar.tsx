@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { Button } from "./button";
-import { Ghost } from "lucide-react";
 import Link from "next/link";
 
 export default function Navbar(){
