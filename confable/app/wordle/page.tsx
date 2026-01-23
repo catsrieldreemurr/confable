@@ -21,6 +21,8 @@ export default function Page(){
     const maxLength = 5;
     const [hasWon, setHasWon] = useState(false);
     const [winningAtt, setWinningAtt] = useState(0);
+
+    const [def, setDef] = useState<any[]>([]);
     useEffect(() => {
         async function word(){
             const w = await Word();
@@ -30,6 +32,31 @@ export default function Page(){
         }
         word();
     }, [])
+
+useEffect(() => {
+    async function getDefinition() {
+        if (!word) return; 
+
+        console.log("Fetching definition for:", word);
+
+        const res = await fetch("/api/getDefinition", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ word: word })
+        });
+
+        const data = await res.json();
+        setDef(data);
+    }
+
+    getDefinition();
+}, [word]);
+
+function hasDefinition(data:Array<any>){
+    if(!data || !data[0]) return "Loading...";
+
+    return data[0].meanings?.[0]?.definitions?.[0]?.definition || "No definition available.";;
+}
 
     return(
         <div className="bg-gray-600 h-screen">
@@ -84,12 +111,15 @@ export default function Page(){
                 (currentGuess > 5 && hasWon === false) && <div>
                     <h1 className="text-2xl text-white font-bold text-center">You Lost.</h1>
                     <h2 className="text-xl text-white text-center">The word was {word}</h2>
+                    <h3 className="text-lg text-white text-center">Definition: {hasDefinition(def)}</h3>
                 </div>
             }{
                 (currentGuess > 5 && hasWon) && <div>
                     <h1 className="text-2xl text-white font-bold text-center">You Won!</h1>
                     <h2 className="text-xl text-white text-center">The word was {word}.</h2>
+                    <h3 className="text-lg text-white text-center">Definition: {hasDefinition(def)}</h3>
                     <p className="text-white text-center">It took you {winningAtt + 1} attempts.</p>
+                    
                 </div>
             }
         </div>
