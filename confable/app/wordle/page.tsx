@@ -78,7 +78,7 @@ function hasDefinition(data:Array<any>){
                             setCurrentGuess(currentGuess + 1)
 
                             const copy = guess.slice();
-                            copy[currentGuess] = tempGuess;
+                            copy[currentGuess] = tempGuess.toLowerCase();
 
                             const copy2 = isSubmitted.slice();
                             copy2[currentGuess] = true;
@@ -92,7 +92,7 @@ function hasDefinition(data:Array<any>){
                 }}>
                     <Label htmlFor="guess" className="p-3 text-white text-lg">Guess</Label>
                     <Input name="guess" maxLength={maxLength}  className="w-[7rem] bg-white text-black text-center" value={tempGuess} onChange={(e) => {
-                        setTemp(e.target.value)
+                        setTemp(e.target.value.toLowerCase())
                         const copy = guess.slice();
                         copy[currentGuess] = e.target.value;
 
@@ -110,15 +110,15 @@ function hasDefinition(data:Array<any>){
             {
                 (currentGuess > 5 && hasWon === false) && <div className="flex flex-col items-center justify-center h-screen bg-gray-600">
                     <h1 className="text-2xl text-white font-bold text-center">You Lost.</h1>
-                    <h2 className="text-xl text-white text-center">The word was {word}</h2>
+                    <h2 className="text-xl text-white text-center mt-5">The word was {word}</h2>
                     <h3 className="text-lg text-white text-center">Definition: {hasDefinition(def)}</h3>
                 </div>
             }{
                 (currentGuess > 5 && hasWon) && <div className="flex flex-col items-center justify-center h-screen bg-gray-600">
                     <h1 className="text-2xl text-white font-bold text-center">You Won!</h1>
-                    <h2 className="text-xl text-white text-center">The word was {word}.</h2>
+                    <h2 className="text-xl text-white text-center mt-5">The word was {word}.</h2>
                     <h3 className="text-lg text-white text-center">Definition: {hasDefinition(def)}</h3>
-                    <p className="text-white text-center">It took you {winningAtt + 1} attempts.</p>
+                    <p className="text-white text-center mt-5">It took you {winningAtt + 1} attempts.</p>
                     
                 </div>
             }
