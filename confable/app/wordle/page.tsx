@@ -27,8 +27,6 @@ export default function Page(){
         async function word(){
             const w = await Word();
             setWord(w[0]);
-
-            console.log(w)
         }
         word();
     }, [])
@@ -36,9 +34,6 @@ export default function Page(){
 useEffect(() => {
     async function getDefinition() {
         if (!word) return; 
-
-        console.log("Fetching definition for:", word);
-
         const res = await fetch("/api/getDefinition", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

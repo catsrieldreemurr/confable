@@ -7,9 +7,6 @@ interface SetProps{
 
 export default function WordBox({word, len, currentGuess, isSubmitted}:SetProps){
     const arr = new Array(len).fill(word);
-
-    console.log(currentGuess)
-    console.log(word)
     return(
         <div className="flex gap-1">
             {
