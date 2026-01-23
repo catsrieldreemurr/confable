@@ -62,8 +62,8 @@ function hasDefinition(data:Array<any>){
         <div className="bg-gray-600 h-screen">
             <Navbar></Navbar>
                 {currentGuess <= 5 && <div className="flex flex-col justify-center items-center mt-10 gap-2"> {/* GameBox */}
-                <h1 className="text-white text-2xl font-bold mb-5">Wordle</h1>
-
+                <h1 className="text-white text-2xl font-bold">Wordle <span className="text-red-400 font-bold underline">Hardcore</span> </h1>
+                <h2 className="text-white mb-5">Evil and mean Wordle</h2>
                 
                 <form className="flex flex-col justify-center items-center mb-5" autoComplete="off" onSubmit={(e) => {
                     e.preventDefault()
