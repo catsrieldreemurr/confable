@@ -53,9 +53,9 @@ useEffect(() => {
 }, [word]);
 
 function hasDefinition(data:Array<any>){
-    if(!data || !data[0]) return "Loading...";
+    if(!data || !data[0]) return "No definition available.";
 
-    return data[0].meanings?.[0]?.definitions?.[0]?.definition || "No definition available.";;
+    return data[0].meanings?.[0]?.definitions?.[0]?.definition || "No definition available.";
 }
 
     return(
@@ -108,13 +108,13 @@ function hasDefinition(data:Array<any>){
             </div>}
 
             {
-                (currentGuess > 5 && hasWon === false) && <div>
+                (currentGuess > 5 && hasWon === false) && <div className="flex flex-col items-center justify-center h-screen bg-gray-600">
                     <h1 className="text-2xl text-white font-bold text-center">You Lost.</h1>
                     <h2 className="text-xl text-white text-center">The word was {word}</h2>
                     <h3 className="text-lg text-white text-center">Definition: {hasDefinition(def)}</h3>
                 </div>
             }{
-                (currentGuess > 5 && hasWon) && <div>
+                (currentGuess > 5 && hasWon) && <div className="flex flex-col items-center justify-center h-screen bg-gray-600">
                     <h1 className="text-2xl text-white font-bold text-center">You Won!</h1>
                     <h2 className="text-xl text-white text-center">The word was {word}.</h2>
                     <h3 className="text-lg text-white text-center">Definition: {hasDefinition(def)}</h3>
